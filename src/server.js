@@ -9,6 +9,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001;
 
+if (process.env.NODE_ENV === "production") job.start();
+
+
 app.use(rateLimiter)
 // middleware
 app.use(express.json());
@@ -18,6 +21,10 @@ app.use(express.json());
 //     console.log("Hey we hit a req, the method is", req.method);
 //     next()
 // });
+
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ status: "ok"})
+})
 
 app.use("/api/transactions", transactionsRoute)
 
